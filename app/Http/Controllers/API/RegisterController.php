@@ -12,7 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 class RegisterController extends BaseController
 {
     use HasApiTokens;
-    
+
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -28,10 +28,16 @@ class RegisterController extends BaseController
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
+
         $user = User::create($input);
-        $success['token'] =  $user->createToken('MyApp')->plainTextToken;
+
+        $success['id'] =  $user->id;
         $success['name'] =  $user->name;
-        return $this->sendResponse($success, 'User register successfully.');
+        $success['email'] =  $user->email;
+        $success['password'] =  $user->password;
+        $success['token'] =  $user->createToken('MyApp')->plainTextToken;
+
+        return response()->json($success, 200);
     }
 
 
@@ -39,9 +45,14 @@ class RegisterController extends BaseController
     {
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $user = Auth::user();
-            $success['token'] =  $user->createToken('MyApp')->plainTextToken;
+
+            $success['id'] =  $user->id;
             $success['name'] =  $user->name;
-            return $this->sendResponse($success, 'User login successfully.');
+            $success['email'] =  $user->email;
+            $success['password'] =  $user->password;
+            $success['token'] =  $user->createToken('MyApp')->plainTextToken;
+
+            return response()->json($success, 200);
         }
         else{
             return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
