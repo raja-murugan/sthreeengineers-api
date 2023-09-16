@@ -37,7 +37,7 @@ class RegisterController extends BaseController
         $success['password'] =  $user->password;
         $success['token'] =  $user->createToken('MyApp')->plainTextToken;
 
-        return response()->json($success, 200);
+        return $this->sendResponse($success, 'User register successfully.');
     }
 
 
@@ -52,7 +52,7 @@ class RegisterController extends BaseController
             $success['password'] =  $user->password;
             $success['token'] =  $user->createToken('MyApp')->plainTextToken;
 
-            return response()->json($success, 200);
+            return $this->sendResponse($success, 'User login successfully.');
         }
         else{
             return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
