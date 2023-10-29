@@ -11,7 +11,7 @@ class EngineerController extends BaseController
 {
     public function index()
     {
-        $engineer = Engineer::all();
+        $engineer = Engineer::where('soft_delete', '!=', 1)->get();
 
         return response()->json($engineer);
     }
@@ -36,7 +36,7 @@ class EngineerController extends BaseController
 
     public function show($id)
     {
-        $engineer = Engineer::find($id);
+        $engineer = Engineer::where('soft_delete', '!=', 1)->find($id);
 
         return response()->json($engineer);
     }
