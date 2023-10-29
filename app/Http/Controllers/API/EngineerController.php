@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Engineer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-class EngineerController extends Controller
+class EngineerController extends BaseController
 {
     public function index()
     {
         $engineer = Engineer::all();
 
-       return response()->json($engineer);
+        return response()->json($engineer);
     }
 
     public function store(Request $request)
@@ -34,14 +34,14 @@ class EngineerController extends Controller
         return response()->json($engineer);
     }
 
-    public function view($id)
+    public function show($id)
     {
         $engineer = Engineer::find($id);
 
         return response()->json($engineer);
     }
 
-    public function update($id)
+    public function update(Request $request, Engineer $id)
     {
         $data = request()->validate(
             [
@@ -58,15 +58,10 @@ class EngineerController extends Controller
         return response()->json($id, 200);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, Engineer $id)
     {
-        $data = request()->validate(
-            [
-                'soft_delete' => 1,
-            ]
-        );
-
-        $id->update($data);
+        $id->soft_delete = 1;
+        $id->save;
 
         return response()->json($id, 200);
     }

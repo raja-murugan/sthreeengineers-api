@@ -27,11 +27,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::middleware('auth:sanctum')->get('/engineer', [EngineerController::class, 'index']);
 
-    Route::middleware('auth:sanctum')->post('/create/engineer', [EngineerController::class, 'store']);
+    Route::middleware('auth:sanctum')->post('/engineer/create', [EngineerController::class, 'store']);
 
     Route::middleware('auth:sanctum')->get('/engineer/show/{id}', [EngineerController::class, 'show']);
 
     Route::middleware('auth:sanctum')->put('/engineer/update/{id}', [EngineerController::class, 'update']);
 
-    Route::middleware('auth:sanctum')->put('/engineer/{id}/delete', [EngineerController::class, 'destroy']);
+    Route::middleware('auth:sanctum')->put('/engineer/delete/{id}', [EngineerController::class, 'destroy']);
 });
