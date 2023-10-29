@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\API\EngineerController;
 use App\Http\Controllers\API\ClientController;
+use App\Http\Controllers\API\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +48,16 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::middleware('auth:sanctum')->put('/client/update/{id}', [ClientController::class, 'update']);
 
     Route::middleware('auth:sanctum')->put('/client/delete/{id}', [ClientController::class, 'destroy']);
+});
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::middleware('auth:sanctum')->get('/employee', [EmployeeController::class, 'index']);
+
+    Route::middleware('auth:sanctum')->post('/employee/create', [EmployeeController::class, 'store']);
+
+    Route::middleware('auth:sanctum')->get('/employee/show/{id}', [EmployeeController::class, 'show']);
+
+    Route::middleware('auth:sanctum')->put('/employee/update/{id}', [EmployeeController::class, 'update']);
+
+    Route::middleware('auth:sanctum')->put('/employee/delete/{id}', [EmployeeController::class, 'destroy']);
 });
