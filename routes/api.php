@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\API\EngineerController;
+use App\Http\Controllers\API\ClientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,4 +35,16 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::middleware('auth:sanctum')->put('/engineer/update/{id}', [EngineerController::class, 'update']);
 
     Route::middleware('auth:sanctum')->put('/engineer/delete/{id}', [EngineerController::class, 'destroy']);
+});
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::middleware('auth:sanctum')->get('/client', [ClientController::class, 'index']);
+
+    Route::middleware('auth:sanctum')->post('/client/create', [ClientController::class, 'store']);
+
+    Route::middleware('auth:sanctum')->get('/client/show/{id}', [ClientController::class, 'show']);
+
+    Route::middleware('auth:sanctum')->put('/client/update/{id}', [ClientController::class, 'update']);
+
+    Route::middleware('auth:sanctum')->put('/client/delete/{id}', [ClientController::class, 'destroy']);
 });
